@@ -1,12 +1,13 @@
 @extends('layouts.main')
 
 @section('title')
-    All popular posts
+    {{ $title }}
 @endsection
 
 @section('container')
     <div class="row">
         <div class="col-md-8">
+            <span>Author: </span><h2 class="mb-4 text-decoration-underline">{{ $title }}</h2>
             @foreach ($posts as $post)
                 <article class="mb-5">
                     <div class="card">
@@ -34,7 +35,7 @@
                     <h3>Popular Posts</h3>
                 </div>
                 <div class="card-body">
-                    @foreach ($posts->take(10) as $post)
+                    @foreach ($posts->take(5) as $post)
                         <article class="d-flex">
                             <span class="text-dark">{{ $i = isset($i) ? ++$i . '. ' : $i = 1 . '. ' }}</span>&nbsp;
                             <a href="/posts/{{ $post->slug }}" class="text-decoration-none">

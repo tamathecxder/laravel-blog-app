@@ -5,35 +5,37 @@
 @endsection
 
 @section('container')
-    <h1 class="text-decoration-underline mb-4">{{ $category->name }}</h1>
+    <span>Category: </span><h2 class="text-decoration-underline mb-4">{{ $category->name }}</h2>
 
     @foreach ($posts as $post)
-        <div class="row">
-            <div class="col-md-8">
-                <article class="mb-3">
-                    <div class="card rounded">
-                        <div class="card-header bg-white">
-                            <a href="/posts/{{ $post->slug }}" class="text-decoration-none">
-                                <h2>{{ $post->title }}</h2>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <p>{{ $post->excerpt }}</p>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    @endforeach
+        <article class="mb-5">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <a href="/posts/{{ $post->slug }}" class="text-decoration-none">
+                        <h2>{{ $post->title }}</h2>
+                    </a>
+                    <p>Author:
+                        <a href="/authors/{{ $post->author->username }}"
+                            class="text-decoration-none">{{ $post->author->name }}</a> |
+                        <a href="/categories/{{ $post->category->slug }}"
+                            class="text-dark fw-bold text-decoration-none">{{ $post->category->name }}</a>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <p>{{ $post->excerpt }}</p>
 
+                    <a href="/posts/{{ $post->slug }}" class="btn btn-outline-primary">Read more...</a>
+                </div>
+            </div>
+        </article>
+    @endforeach
 @endsection
 
 
 
 
 
-{{--
-Post::create([
+{{-- Post::create([
     'title' => 'Making async page with Vue JS',
     'slug' => 'making-async-page-with-vue-js',
     'category_id' => 1,

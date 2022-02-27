@@ -18,7 +18,7 @@
 
         <ul class="nav nav-pills">
             <li class="nav-item "><a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-            <li class="nav-item"><a href="/posts" class="nav-link {{ request()->is('blog') ? 'active' : '' }}">Blogs</a></li>
+            <li class="nav-item"><a href="/posts" class="nav-link {{ request()->is('posts') ? 'active' : '' }}">Blogs</a></li>
             <li class="nav-item"><a href="/categories" class="nav-link {{ request()->is('categories') ? 'active' : '' }}">Categories</a></li>
             <li class="nav-item"><a href="/about" class="nav-link {{ request()->is('about') ? 'active' : '' }}">About</a></li>
         </ul>
