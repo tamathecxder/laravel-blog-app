@@ -12,6 +12,7 @@ class Post extends Model
     // protected $fillable = ['title', 'excerpt', 'body'];
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $with = ['author', 'category'];
 
     public function category() {
         return $this->belongsTo(Category::class);

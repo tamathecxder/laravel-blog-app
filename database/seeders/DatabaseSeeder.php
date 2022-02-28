@@ -29,7 +29,22 @@ class DatabaseSeeder extends Seeder
             'slug' => 'frontend-developers',
         ]);
 
-        Post::factory(25)->create();
+        Category::create([
+            'name' => 'Cyber Security',
+            'slug' => 'cyber-security',
+        ]);
+
+        Category::create([
+            'name' => 'Blockchain Technology',
+            'slug' => 'blockchain-technology',
+        ]);
+
+        Category::create([
+            'name' => 'Mobile Apps Developers',
+            'slug' => 'mobile-apps-developers',
+        ]);
+
+        Post::factory(40)->create();
 
     }
 }

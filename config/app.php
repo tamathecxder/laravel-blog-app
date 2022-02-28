@@ -162,6 +162,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        /**
+         * Laravel Unsplash
+         */
+        MarkSitko\LaravelUnsplash\UnsplashServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -230,6 +235,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Unsplash' => MarkSitko\LaravelUnsplash\UnsplashFacade::class,
     ],
 
 ];
