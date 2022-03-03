@@ -22,5 +22,28 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function scopeFilter($query, array $filters) {
+        //Example for using isset and ternary operator
+        if ( isset($filters['search']) ? $filters['search'] : false ) {
+            return $query->where('title', 'like', '%' . $filters['search'] . '%')
+                        ->orWhere('body', 'like', '%' . $filters['search'] . '%');
+        }
+
+        // Implements nulls qoalescing operator and when notation
+        $query->when($filters['category'] ?? false, function($query, $category) {
+            return $query->whereHas( 'category', function($query) use ($category) {
+                $query->where('slug', $category);
+            });
+        });
+
+        // Implements arrow function
+        $query->when($filters['author'] ?? false, fn($query, $author) =>
+            $query->whereHas('author',  fn($query) =>
+                $query->where('username', $author)
+            )
+        );
+    }
+
+
 }
 

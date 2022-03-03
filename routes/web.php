@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
 use App\Models\Category;
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,17 +45,33 @@ Route::get('/categories', function(Category $category) {
     ]);
 });
 
-// Specific Category
-Route::get('/categories/{category:slug}', function(Category $category) {
-    return view('category', [
-        'category' => $category,
-        'posts' => $category->post->load('category', 'author'),
-    ]);
-});
+// Login
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/authors/{author:username}', function(User $author) {
-    return view('author', [
-        'posts' => $author->posts->load('category', 'author'),
-        'title' => $author->name,
-    ]);
-});
+// Register
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store']);
+
+
+// Dashboard (for authenticate users)
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+
+
+
+
+// // Specific Category
+// Route::get('/categories/{category:slug}', function(Category $category) {
+//     return view('category', [
+//         'category' => $category,
+//         'posts' => $category->post->load('category', 'author'),
+//     ]);
+// });
+
+// Route::get('/authors/{author:username}', function(User $author) {
+//     return view('author', [
+//         'posts' => $author->posts->load('category', 'author'),
+//         'title' => $author->name,
+//     ]);
+// });

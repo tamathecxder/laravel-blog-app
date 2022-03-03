@@ -15,12 +15,40 @@
             </svg>
             <span class="fs-4">Simple header</span>
         </a>
-
         <ul class="nav nav-pills">
-            <li class="nav-item "><a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-            <li class="nav-item"><a href="/posts" class="nav-link {{ request()->is('posts') ? 'active' : '' }}">Blogs</a></li>
-            <li class="nav-item"><a href="/categories" class="nav-link {{ request()->is('categories') ? 'active' : '' }}">Categories</a></li>
-            <li class="nav-item"><a href="/about" class="nav-link {{ request()->is('about') ? 'active' : '' }}">About</a></li>
+            <li class="nav-item"><a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+            </li>
+            <li class="nav-item"><a href="/posts"
+                    class="nav-link {{ request()->is('posts') ? 'active' : '' }}">Blogs</a></li>
+            <li class="nav-item"><a href="/categories"
+                    class="nav-link {{ request()->is('categories') ? 'active' : '' }}">Categories</a></li>
+            <li class="nav-item"><a href="/about"
+                    class="nav-link {{ request()->is('about') ? 'active' : '' }}">About</a></li>
+
+            @auth
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <strong>
+                            {{ auth()->user()->username }}
+                        </strong>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-layout-text-window-reverse"></i> My Dashboard</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="/logout" method="post">
+                                @csrf
+                                <button type="submit" class="dropdown-item"><i class="bi bi-arrow-up-right-square"></i> Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @else
+                <li class="nav-item"><a href="/login"
+                        class="nav-link {{ request()->is('login') ? 'active' : '' }}"><i
+                            class="bi bi-person"></i>Login</a></li>
+            @endauth
         </ul>
     </header>
 </div>
