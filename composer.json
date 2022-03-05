@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "cretueusebiu/valet-windows": "^2.4",
+        "cviebrock/eloquent-sluggable": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "itsgoingd/clockwork": "^5.1",

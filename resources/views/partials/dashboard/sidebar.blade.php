@@ -9,30 +9,23 @@
                 Pages
             </li>
 
-            <li class="sidebar-item">
+            <li class="sidebar-item {{ request()->is('dashboard') ? "active" : '' }}">
                 <a class="sidebar-link" href="/dashboard">
                     <i class="align-middle" data-feather="sliders"></i> <span
                         class="align-middle">Dashboard</span>
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="user"></i> <span
-                        class="align-middle">Profile</span>
+            <li class="sidebar-item {{ request()->is('dashboard/posts') ? "active" : '' }}">
+                <a class="sidebar-link" href="{{ route('posts.index') }}">
+                    <i class="align-middle" data-feather="grid"></i> <span class="align-middle">My Posts</span>
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-cards.html">
-                    <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="ui-typography.html">
-                    <i class="align-middle" data-feather="align-left"></i> <span
-                        class="align-middle">Typography</span>
+            <li class="sidebar-item {{ request()->is('dashboard/posts/create') ? "active" : '' }}">
+                <a class="sidebar-link" href="{{ route('posts.create') }}">
+                    <i class="align-middle" data-feather="send"></i> <span
+                        class="align-middle">Create new post</span>
                 </a>
             </li>
 

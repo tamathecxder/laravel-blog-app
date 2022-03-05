@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1 class="h3 mb-3">Blank Page</h1>
+    <h1 class="h3 mb-3">Welcome back, {{ auth()->user()->name }}</h1>
 
     <div class="row">
         <div class="col-12">
