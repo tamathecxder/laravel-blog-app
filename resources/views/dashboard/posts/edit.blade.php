@@ -5,16 +5,16 @@
 @endsection
 
 @section('content')
-    <h1 class="mb-5 h3">Create new posts</h1>
+    <h1 class="mb-5 h3">Edit selected post</h1>
 
     <div class="row">
         <div class="col-12">
-            @if (session('success'))
+            {{-- @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
                     <strong>Register Done!</strong> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            @endif
+            @endif --}}
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title mb-0">Do something great!</h3>
@@ -22,13 +22,15 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8">
-                            <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('posts.update', $post->slug) }}" method="post"
+                                enctype="multipart/form-data">
+                                @method('patch')
                                 @csrf
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Post title</label>
                                     <input type="text" name="title"
                                         class="form-control @error('title') is-invalid @enderror" id="title"
-                                        value="{{ old('title') }}" required autofocus>
+                                        value="{{ old('title', $post->title) }}" required autofocus>
 
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -37,7 +39,7 @@
                                 <div class="mb-3">
                                     <label for="slug" class="form-label">Slug</label>
                                     <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                                        id="slug" value="{{ old('slug') }}" required readonly>
+                                        id="slug" value="{{ old('slug', $post->slug) }}" required readonly>
 
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -48,7 +50,7 @@
                                     <select name="category_id" class="form-select mb-3" required>
                                         <option selected disabled>Open this select menu</option>
                                         @foreach ($categories as $category)
-                                            @if (old('category_id') == $category->id)
+                                            @if (old('category_id', $post->category_id) == $category->id)
                                                 <option value="{{ $category->id }}" selected>{{ $category->name }}
                                                 </option>
                                             @else
@@ -58,10 +60,16 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
+                                    <input type="hidden" name="old_image" value="{{ $post->image }}">
                                     <label for="image" class="form-label">Posts banner image</label>
-                                    <img class="img-preview img-fluid mb-3 col-sm-6">
+                                    @if ($post->image)
+                                        <img src="{{ asset('storage/' . $post->image) }}" class="d-block img-preview img-fluid mb-3 col-sm-6">
+                                    @else
+                                        <img class="img-preview img-fluid mb-3 col-sm-6">
+                                    @endif
 
-                                    <input class="form-control @error('image') is-invalid @enderror" name="image" type="file" id="image" onchange="previewImage()">
+                                    <input class="form-control @error('image') is-invalid @enderror" name="image"
+                                        type="file" id="image" onchange="previewImage()">
 
                                     @error('image')
                                         <div class="invalid-feedback">
@@ -78,10 +86,10 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    <input id="body" type="hidden" name="body" value="{{ old('body') }}">
+                                    <input id="body" type="hidden" name="body" value="{{ old('body', $post->body) }}">
                                     <trix-editor input="body"></trix-editor>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </form>
                         </div>
                     </div>
@@ -107,7 +115,7 @@
             event.preventDefault();
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#error-alert').fadeTo(4000, 500).slideUp(500, function() {
                 $('#error-alert').slideUp(500);
             });
@@ -117,7 +125,6 @@
             });
         });
 
-        // preview Image
         function previewImage() {
             const image = document.querySelector('#image');
             const imgPreview = document.querySelector('.img-preview');
@@ -130,7 +137,5 @@
                 imgPreview.src = oFREvent.target.result;
             }
         }
-
-
     </script>
 @endpush

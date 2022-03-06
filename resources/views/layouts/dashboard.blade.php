@@ -15,9 +15,6 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
 
-    {{-- Trix Editor WYSIWYG --}}
-    <link rel="stylesheet" href="{{ asset('assets') }}/css/trix/trix.css">
-    <script src="{{ asset('assets') }}/js/trix/trix-core.js"></script>
 
     <title>Blog App Dashboard | @yield('title')</title>
 
@@ -28,6 +25,9 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+    {{-- Trix Editor WYSIWYG --}}
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/trix/trix.css">
+    <script src="{{ asset('assets') }}/js/trix/trix-core.js"></script>
 
     <style>
         trix-toolbar [data-trix-button-group="file-tools"] {
@@ -56,7 +56,11 @@
     {{-- bootstrap 5 js
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
 
+
     <script src="{{ asset('assets') }}/adminkit/js/app.js"></script>
+
+    {{-- sweetalert2 --}}
+    <script src="{{ asset('assets') }}/js/sweetalert2/sweetalert2.all.min.js"></script>
 
     {{-- jquery --}}
     <script src="{{ asset('assets') }}/js/jquery/jquery-3.6.0.min.js"></script>

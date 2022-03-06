@@ -29,27 +29,13 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="icons-feather.html">
-                    <i class="align-middle" data-feather="coffee"></i> <span
-                        class="align-middle">Icons</span>
-                </a>
-            </li>
-
             <li class="sidebar-header">
-                Plugins & Addons
+                Admin resource
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="charts-chartjs.html">
-                    <i class="align-middle" data-feather="bar-chart-2"></i> <span
-                        class="align-middle">Charts</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="maps-google.html">
-                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+                <a class="sidebar-link" href="{{ route('categories.index') }}">
+                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Categoires</span>
                 </a>
             </li>
         </ul>

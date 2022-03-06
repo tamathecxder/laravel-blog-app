@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardPostController extends Controller
 {
@@ -46,8 +47,14 @@ class DashboardPostController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'slug' => 'required|unique:posts',
+            'image' => 'required|file|image|mimes:png,jpg|max:2048',
             'body' => 'required'
         ]);
+
+        if ( $request->file('image') ) {
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
+
 
         $validatedData['user_id'] = auth()->user()->id;
 
@@ -82,7 +89,10 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('dashboard.posts.edit', [
+            'post' => $post,
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -94,7 +104,35 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $rules = [
+            'title' => 'required',
+            'image' => 'required|file|image|mimes:png,jpg|max:2048',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+
+        if ( $request->slug != $post->slug ) {
+            $rules['slug'] = 'required|unique:posts';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        if ( $request->file('image') ) {
+            if ( $request->old_image ) {
+                Storage::delete($request->old_image);
+            }
+
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
+
+        $validatedData['user_id'] = auth()->user()->id;
+
+        $validatedData['excerpt'] = Str::limit(strip_tags($validatedData['body']), 150, '...');
+
+        $post->where('id', $post->id)->update($validatedData);
+
+        return redirect()->route('posts.index')->with('success', 'Your post has been updated!');
+
     }
 
     /**
@@ -105,7 +143,13 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if ($post->image) {
+            Storage::delete($post->image);
+        }
+
+        Post::destroy($post->id);
+
+        return redirect()->route('posts.index')->with('success', 'Post has been deleted!');
     }
 
     public function checkSlug(Request $request) {
