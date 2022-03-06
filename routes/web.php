@@ -68,21 +68,9 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 // Admin category
-Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('auth');
+Route::resource('/dashboard/categories', AdminCategoryController::class)
+->parameters(['categories' => 'category:slug'])->except('show')->middleware('IsAdmin');
+
+Route::get('/dashboard/categories/checkSlug', [AdminCategoryController::class, 'checkSlug'])->middleware('auth');
 
 
-
-// // Specific Category
-// Route::get('/categories/{category:slug}', function(Category $category) {
-//     return view('category', [
-//         'category' => $category,
-//         'posts' => $category->post->load('category', 'author'),
-//     ]);
-// });
-
-// Route::get('/authors/{author:username}', function(User $author) {
-//     return view('author', [
-//         'posts' => $author->posts->load('category', 'author'),
-//         'title' => $author->name,
-//     ]);
-// });

@@ -29,15 +29,17 @@
                 </a>
             </li>
 
-            <li class="sidebar-header">
-                Admin resource
-            </li>
+            @can('IsAdmin')
+                <li class="sidebar-header">
+                    Admin resource
+                </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('categories.index') }}">
-                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Categoires</span>
-                </a>
-            </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('categories.index') }}">
+                        <i class="align-middle" data-feather="map"></i> <span class="align-middle">Categoires</span>
+                    </a>
+                </li>
+            @endcan
         </ul>
     </div>
 </nav>
